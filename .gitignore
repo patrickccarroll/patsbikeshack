@@ -7,6 +7,9 @@
 *.userosscache
 *.sln.docstates
 
+# Deployment contact settings. Copy contact.local.config.template and keep the populated file untracked.
+contact.local.config
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

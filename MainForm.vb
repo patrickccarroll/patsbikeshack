@@ -10,7 +10,7 @@
     Private Sub mnuHelpAbout_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuHelpAbout.Click
         'Shows message box describing program
 
-        MessageBox.Show("Pat's Bike Shack V1.0" & vbCrLf & "by Patrick C. Carroll", "Pat's Bike Shack V1.0")
+        MessageBox.Show("Pat's Bike Shack V1.0", "Pat's Bike Shack V1.0")
 
 
     End Sub
@@ -278,6 +278,35 @@
     End Sub
 
     Private Sub ContactUsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ContactUsToolStripMenuItem.Click
-        MessageBox.Show("Please Call 1-800-123-4567 for more information", "Contact Us")
+        MessageBox.Show(ContactMessage(), "Contact Us")
     End Sub
+
+    ' Deployment contact details stay out of source control.
+    ' Copy contact.local.config.template to the gitignored contact.local.config
+    ' file beside the executable to supply a public contact phone.
+    Function ContactMessage() As String
+        Dim phone As String = ConfiguredContactPhone()
+        If phone = String.Empty Then
+            Return "No contact number is configured for this deployment."
+        End If
+        Return "Please call " & phone & " for more information."
+    End Function
+
+    Function ConfiguredContactPhone() As String
+        Dim phone As String = String.Empty
+        Try
+            Dim configured As String = System.Configuration.ConfigurationManager.AppSettings("ContactPhone")
+            If Not String.IsNullOrWhiteSpace(configured) Then
+                phone = configured.Trim()
+            End If
+        Catch ex As Exception
+            phone = String.Empty
+        End Try
+
+        ' Template tokens are not a real contact number.
+        If phone.StartsWith("REPLACE_") Then
+            Return String.Empty
+        End If
+        Return phone
+    End Function
 End Class

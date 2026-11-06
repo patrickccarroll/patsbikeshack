@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appSettings>
+  <!-- Copy to contact.local.config next to the executable. Do not commit that copy.
+       Replace the token below with this deployment's public contact phone.
+       Leave the token in place to show no phone number. -->
+  <add key="ContactPhone" value="REPLACE_WITH_DEPLOYMENT_PHONE" />
+</appSettings>
